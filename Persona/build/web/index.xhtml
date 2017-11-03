@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:form id="form1">
+        
+        
+        
+        <p:dataTable value="#{personaBean.listar()}" var="persona" rowKey="#{persona.identificacion}" id="tabla1" paginator="true" rows="5">
+            <p:column filterBy="#{persona.identificacion}" headerText="Identificacion ">
+                    <h:outputText value="#{persona.identificacion}"/>
+                </p:column>
+
+                <p:column headerText="Nombre ">
+                    <h:outputText value="#{persona.nombre}"/>
+                </p:column>
+
+                <p:column headerText="Apellido ">
+                    <h:outputText value="#{persona.apellido}"/>
+                </p:column>
+
+                <p:column headerText="Telefono ">
+                    <h:outputText value="#{persona.telefono}"/>
+                </p:column>
+
+                <p:column headerText="Direccion ">
+                    <h:outputText value="#{persona.direccion}"/>
+                </p:column>
+
+                <p:column headerText="Acciones ">
+                    <p:commandButton value="eliminar"  action="#{personaBean.eliminar(persona)}" update="tabla1"/>
+                    <p:commandButton value="ver"  action="#{personaBean.ver(persona)}" onclick="PF('verPersona').show()" update=":form1:formulario" />
+                     <p:commandButton value="Actualizar"  onclick="PF('actualizarPersona').show()" update=":form1:formulario1" >
+                         <f:setPropertyActionListener value="#{persona}" target="#{personaBean.personaSelect}" />
+                     </p:commandButton>
+
+                </p:column>
+            
+        </p:dataTable>
+        <p:panel  id="crear">
+        <p:panelGrid columns="2">
+                <h:outputText value="Identificacion: "/>
+                <p:inputText value="#{personaBean.pers.identificacion}" />
+               
+                <h:outputText value="Nombre: "/>
+                <p:inputText value="#{personaBean.pers.nombre}" />
+            
+                <h:outputText value="Apellido: "/>
+                <p:inputText value="#{personaBean.pers.apellido}" />
+                            
+                <h:outputText value="Telefon: "/>
+                <p:inputText value="#{personaBean.pers.telefono}" />
+                
+                <h:outputText value="Direccion: "/>
+                <p:inputText value="#{personaBean.pers.direccion}" />
+                 
+            </p:panelGrid>
+        </p:panel>
+        <p:commandButton value="Crear Persona" action="#{personaBean.crear()}" update="form1:tabla1  form1:crear"  >
+            <p:resetInput target=":form1:crear"/>
+        </p:commandButton>
+       
+        
+        
+        
+        
+        
+        
+        <p:dialog  header="Ver Persona" widgetVar="verPersona" modal="true" height="200" width="500" appendTo="@(body)" >
+                                       
+             <p:outputPanel    >
+                                           
+             
+                    <p:panelGrid columns="2" id="formulario">
+                        <h:outputText value="Identificacion: "/>
+                        <h:outputText value="#{personaBean.actualizado.identificacion}" />
+                        
+                        <h:outputText value="Nombre: "/>
+                        <h:outputText value="#{personaBean.actualizado.nombre}" />
+
+                        <h:outputText value="Apellido: "/>
+                        <h:outputText value="#{personaBean.actualizado.apellido}" />
+
+                        <h:outputText value="Telefono: "/>
+                        <h:outputText value="#{personaBean.actualizado.telefono}" />
+                        
+                        <h:outputText value="Direccion: "/>
+                        <h:outputText value="#{personaBean.actualizado.direccion}" />
+               
+                 
+                    </p:panelGrid>
+            </p:outputPanel>
+                                     
+        </p:dialog>
+        
+        
+        
+        
+       
+            
+            
+            
+            <p:dialog header="Editar Persona" widgetVar="actualizarPersona" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="formulario1" style="text-align:center;">
+                    <p:panelGrid  columns="2" >
+                        <h:outputText value="Nombre" />
+                        <p:inputText value="#{personaBean.personaSelect.nombre}" />
+
+                        <h:outputText value="Apellido" />
+                        <p:inputText value="#{personaBean.personaSelect.apellido}" />
+
+                        <h:outputText value="Identificación:" />
+                        <p:inputText value="#{personaBean.personaSelect.identificacion}" />
+                        
+                        <h:outputText value="Telefono: "/>
+                        <p:inputText value="#{personaBean.personaSelect.telefono}" />
+                        
+                        <h:outputText value="Direccion: "/>
+                        <p:inputText value="#{personaBean.personaSelect.direccion}" />
+
+                        
+                        <p:commandButton value="Editar" action="#{personaBean.actualizar()}" update=":form1"></p:commandButton>
+                    </p:panelGrid>
+                </p:outputPanel>
+            </p:dialog>
+            
+            
+                                     
+       
+        
+    </h:form>
+</html>
+
